@@ -85,9 +85,10 @@ Example for basic check:
 
 <pre><code>
 define service{
-	host_name			Test-Server
-	use					generic-service
-	check_command		check_usolved_linux_realmemory!90!95
+	host_name				Test-Server
+	service_description		Memory
+	use						generic-service
+	check_command			check_usolved_linux_realmemory!90!95
 }
 </code></pre>
 
@@ -95,9 +96,10 @@ Example for using performance data and excluding some partitions:
 
 <pre><code>
 define service{
-	host_name			Test-Server
-	use					generic-service
-	check_command		check_usolved_linux_realmemory!90!95!yes
+	host_name				Test-Server
+	service_description		Memory
+	use						generic-service
+	check_command			check_usolved_linux_realmemory!90!95!yes
 }
 </code></pre>
 
