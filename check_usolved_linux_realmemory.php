@@ -89,6 +89,8 @@ function show_help($help_for)
 	Optional: SNMP version 1 or 2c are supported, if argument not given version 1 is used by default
 	[-P <perfdata>]
 	Optional: Give 'yes' as argument if you wish performace data output
+	[-S <swap>]
+	Optional: Give 'no' as argument if you don't wish to return critical if swap is being used
 	\n";
 
 		echo "Example:";
@@ -127,7 +129,7 @@ function snmp_get($snmp_host, $snmp_community, $snmp_oid, $snmp_version)
 
 //get arguments from cli
 $arguments 						= array();
-$arguments 						= getopt("H:C:V:w:c:P:");
+$arguments 						= getopt("H:C:V:w:c:P:S:");
 
 if(is_array($arguments) && count($arguments) < 4)
 	show_help("");
@@ -172,6 +174,22 @@ if(isset($arguments['P']))
 else
 	$perfdata			= "";
 	
+//get and check swap argument
+if(isset($arguments['S']))
+{
+	$check_swap			= $arguments['S'];
+	if($check_swap == "no")
+	{
+		$check_swap			= false;
+	}
+	else
+	{
+		$check_swap			= true;
+	}
+}
+else
+	$check_swap			= true;
+
 $output_perfdata 				= "";
 $output_string	 				= "";
 $output_string_extended	 		= "";
@@ -233,9 +251,10 @@ $availableSwapSpaceMB					= floor(round($availableSwapSpace / 1024, 2));
 
 $totalSwapUsedCalculatedPercentage		= floor(100 - round( (100 / $totalSwapSize) * $availableSwapSpace, 1));
 $totalSwapUsedMB						= $totalSwapSizeMB - $availableSwapSpaceMB;
-//echo "{$totalSwapSizeMB} | {$availableSwapSpaceMB} = {$totalSwapUsedCalculatedPercentage}%";
 
-if($totalMemoryFreeCalculatedPercentage > $snmp_critical || $totalSwapUsedCalculatedPercentage>0)
+
+
+if($totalMemoryFreeCalculatedPercentage > $snmp_critical || ($check_swap == true && $totalSwapUsedCalculatedPercentage > 0))
 {
 	$exit_code	= 2;
 }
