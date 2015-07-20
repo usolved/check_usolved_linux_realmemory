@@ -1,0 +1,18 @@
+name: check_usolved_linux_realmemory
+description: "file:///README.md"
+url: "https://github.com/usolved/check_usolved_linux_realmemory"
+tags: Memory
+vendor: Linux
+target: Operating System
+type: Plugin
+license: gplv3
+releases: 
+  - 
+    name: 1.0
+    description: "Initial release"
+    files: 
+      - 
+        name: check_usolved_linux_realmemory.php
+        url: "file:///check_usolved_linux_realmemory.php"
+        description: "Initial release"
+        checksum: 0263a73a317046d6ea7f2eab820f2161
